@@ -24,7 +24,7 @@ class GASDasDatabase{
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
   }
-  dataToObject(id,post){
+  dataToObject(post,id){
     let postObj = {};
     postObj.id = id;
     postObj.post = post;
@@ -57,7 +57,7 @@ class GASDasDatabase{
     }
     return postValue;
   }
-  setValue(post,content){
+  setValue(content,post){
     content = JSON.stringify(content);
     return post.setContent(content);
   }
