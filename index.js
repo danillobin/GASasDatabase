@@ -7,6 +7,12 @@ class GASDasDatabase{
       this.folder = DriveApp.createFolder(name);
     }
   }
+  clearBase(){
+    let posts = this.folder.getFiles();
+    while (posts.hasNext()) {
+      posts.next().setTrashed(true);
+    }
+  }
   deleteBase(){
     this.folder.setTrashed(true);
     for (const [key, value] of Object.entries(this)) {
@@ -24,16 +30,25 @@ class GASDasDatabase{
     postObj.post = post;
     return postObj;
   }
-  createPost(content = "",id = ""){
+  createPost(content = "",id = "",mimetype = MimeType.PLAIN_TEXT){
     content = JSON.stringify(content);
     let date = Utilities.formatDate(new Date(), "GMT", "yyMdHmsS");
     id = id ? id : Utilities.base64Encode(date)+this.getRandomInt(100000,999999);
-    let post = this.folder.createFile(id,content);
+    let post = this.folder.createFile(id,content,mimetype);
     let postObj = this.dataToObject(id,post);
     return postObj;
   }
   deletePost(post){
     return post.setTrashed(true);
+  }
+  searchPosts(filters){
+    let posts = this.folder.searchFiles(filters);
+    let searched_posts = [];
+    while (posts.hasNext()) {
+      let post = posts.next();
+      searched_posts.push(this.dataToObject(post.getName(),post))
+    }
+    return searched_posts;
   }
   getValue(post){
     let postValue = post.getBlob().getDataAsString();
@@ -46,33 +61,21 @@ class GASDasDatabase{
     content = JSON.stringify(content);
     return post.setContent(content);
   }
-  getPosts(attrs = []){
-    let posts = this.folder.getFiles();
-    let need_posts = [];
-    let this_ = this;
-    while(posts.hasNext()){
-      let post = posts.next();
-      let postValue = this.getValue(post)
-      if(typeof(postValue) == "object"){
-        if(typeof(attrs) == "object" && attrs.length){
-          attrs.forEach(function(attr){
-              for (const [key, value] of Object.entries(attr)) {
-                let keys = Object.keys(attr);
-                if(postValue[key] != value){
-                  break;
-                }else if(keys[keys.length-1] == key){
-                  let postObj = this_.dataToObject(post.getName(),post);
-                  need_posts.push(postObj);
-                  return;
-                }
-              }
-          })
-        }else{
-          let postObj = this_.dataToObject(post.getName(),post);
-          need_posts.push(postObj);
-        }
+  getPosts(arrObjects = []){
+    let globalquery = "";
+    arrObjects.forEach(function(object,key){
+      let query = "";
+      for (const [key, value] of Object.entries(object)) {
+        let filter = `fullText contains '"${key}":${value}'`;
+        query+= query ? " and "+filter : filter;
       }
-    }
-    return need_posts;
+      if(arrObjects.length > 1){
+        globalquery+= key+1 != arrObjects.length ? `(${query}) or ` : `(${query})`;
+      }else{
+        globalquery = query;
+      }
+    })
+    let posts = this.searchPosts(globalquery);
+    return posts;
   }
 }
