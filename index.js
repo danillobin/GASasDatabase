@@ -35,7 +35,7 @@ class GASDasDatabase{
     let date = Utilities.formatDate(new Date(), "GMT", "yyMdHmsS");
     id = id ? id : Utilities.base64Encode(date)+this.getRandomInt(100000,999999);
     let post = this.folder.createFile(id,content,mimetype);
-    let postObj = this.dataToObject(id,post);
+    let postObj = this.dataToObject(post,id);
     return postObj;
   }
   deletePost(post){
@@ -46,7 +46,7 @@ class GASDasDatabase{
     let searched_posts = [];
     while (posts.hasNext()) {
       let post = posts.next();
-      searched_posts.push(this.dataToObject(post.getName(),post))
+      searched_posts.push(this.dataToObject(post,post.getName()))
     }
     return searched_posts;
   }
