@@ -1,96 +1,78 @@
-class GASasDatabase{    
-  constructor(sheet){
-    this.sheet = sheet;
-    this.init();
-  }
-  init(){
-    this.last_col = this.sheet.getLastColumn();
-    this.last_row = this.sheet.getLastRow();
-    this.data = this.sheet.getDataRange().getValues().splice(1);
-    this.keys = this.sheet.getDataRange().getValues().splice(0,1).flat();
-  }
-  getValueRow(rowID){
-    if(!rowID){return null;}
-    let row = {};
-    row.id = rowID;
-    row.values = this.sheet.getRange(rowID,1,1,this.last_col).getValues().flat();
-    return row;
-  }
-  getValueRowWithKeys(row){
-    let this_ = this;
-    if(typeof(row) == "number"){
-      row = this.getValueRow(row);
-    }else if(typeof(row) != "object"){
-      return null;
+class GASDasDatabase{    
+  constructor(name){
+    this.folder = DriveApp.getFoldersByName(name);
+    if(this.folder.hasNext()){
+      this.folder = this.folder.next();
+    }else{
+      this.folder = DriveApp.createFolder(name);
     }
-    row.values = Object.assign({},row.values);
-    for (let [key, value] of Object.entries(row.values)){
-      delete row.values[key];
-      let i = this_.keys[key];
-      row.values[i] = value;
+  }
+  deleteBase(){
+    this.folder.setTrashed(true);
+    for (const [key, value] of Object.entries(this)) {
+      delete this[key];
     }
-    return row;
   }
-  clearKeys(obj){
-    let this_ = this;
-    obj.values = Object.keys(obj.values).map((key) => obj.values[key]);
-    return obj;
+  getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
   }
-  getRowsIds(attrs){
-    if(!attrs){return this.data.map((i,e) => e = e+2);}
-    let result = [];
+  dataToObject(id,post){
+    let postObj = {};
+    postObj.id = id;
+    postObj.post = post;
+    return postObj;
+  }
+  createPost(content = "",id = ""){
+    content = JSON.stringify(content);
+    let date = Utilities.formatDate(new Date(), "GMT", "yyMdHmsS");
+    id = id ? id : Utilities.base64Encode(date)+this.getRandomInt(100000,999999);
+    let post = this.folder.createFile(id,content);
+    let postObj = this.dataToObject(id,post);
+    return postObj;
+  }
+  deletePost(post){
+    return post.setTrashed(true);
+  }
+  getValue(post){
+    let postValue = post.getBlob().getDataAsString();
+    if(postValue){
+      postValue = JSON.parse(postValue);
+    }
+    return postValue;
+  }
+  setValue(post,content){
+    content = JSON.stringify(content);
+    return post.setContent(content);
+  }
+  getPosts(attrs = []){
+    let posts = this.folder.getFiles();
+    let need_posts = [];
     let this_ = this;
-    attrs.forEach(function(attr){
-      let rows = [];
-      for (const [key, value] of Object.entries(attr)) {
-        let numCol = this_.keys.indexOf(key)+1;
-        rows[numCol] = [];
-        let data = this_.sheet.getRange(2,numCol,this_.last_row,1).getValues().flat();
-        let idx = data.indexOf(value);
-        while (idx != -1) {
-          rows[numCol].push(idx + 2);
-          idx = data.indexOf(value, idx + 1);
+    while(posts.hasNext()){
+      let post = posts.next();
+      let postValue = this.getValue(post)
+      if(typeof(postValue) == "object"){
+        if(typeof(attrs) == "object" && attrs.length){
+          attrs.forEach(function(attr){
+              for (const [key, value] of Object.entries(attr)) {
+                let keys = Object.keys(attr);
+                if(postValue[key] != value){
+                  break;
+                }else if(keys[keys.length-1] == key){
+                  let postObj = this_.dataToObject(post.getName(),post);
+                  need_posts.push(postObj);
+                  return;
+                }
+              }
+          })
+        }else{
+          let postObj = this_.dataToObject(post.getName(),post);
+          need_posts.push(postObj);
         }
       }
-      result.push(rows.reduce((p,c) => p.filter(e => c.includes(e))));
-    })
-    return result.flat();
-  }
-  updateRows(rows){
-    let this_ = this;
-    let last_updated_id;
-    rows.forEach(function(row){
-      for (const [key, value] of Object.entries(row.values)){
-        last_updated_id = row.id;
-        this_.sheet.getRange(row.id,1,1,this_.last_col).setValues([row.values]);
-      }
-    })
-    return this.getValueRow(last_updated_id);
-  }
-
-  delete(rows){
-    let this_ = this;
-    rows.forEach(function(el){
-      this_.sheet.deleteRow(el.id);
-    })
-    this.init();
-  }
-
-  new(attrs){
-    let arr = [];
-    let this_ = this;
-    for (const [key, value] of Object.entries(attrs)) {
-      let index_needle = this_.keys.indexOf(key);
-      if(index_needle != -1){
-        arr[index_needle] = value;
-      }
     }
-    if(arr.length){
-      this.sheet.appendRow(arr);
-      this.init();
-      let list_rows = this.getRowsIds([attrs]);
-      let rowID = list_rows[list_rows.length-1]
-      return this.getValueRowWithKeys(rowID);
-    }
+    return need_posts;
   }
 }
