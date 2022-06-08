@@ -88,6 +88,9 @@ class GASasDatabase{
     if(arr.length){
       this.sheet.appendRow(arr);
       this.init();
+      let list_rows = this.getRowsIds([attrs]);
+      let rowID = list_rows[list_rows.length-1]
+      return this.getValueRowWithKeys(rowID);
     }
   }
 }
