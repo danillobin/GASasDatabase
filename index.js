@@ -32,8 +32,7 @@ class GASDasDatabase{
   }
   createPost(content = "",id = "",mimetype = MimeType.PLAIN_TEXT){
     content = JSON.stringify(content);
-    let date = Utilities.formatDate(new Date(), "GMT", "yyMdHmsS");
-    id = id ? id : Utilities.base64Encode(date)+this.getRandomInt(100000,999999);
+    id = id ? id : Utilities.base64Encode(new Date().valueOf())+this.getRandomInt(100000,999999);
     let post = this.folder.createFile(id,content,mimetype);
     let postObj = this.dataToObject(post,id);
     return postObj;
