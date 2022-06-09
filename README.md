@@ -1,7 +1,10 @@
 # GASasDatabase
 <h3>import</h3>
+Without comment <em>//DriveApp.getFoldersByName</em> doenst work... Idk why, but it heplful,
 <hr>
-const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/min.js').getContentText());<br>const db = new GASDasDatabase(<b>"YOUR DATABASE NAME"</b>,DriveApp);
+//DriveApp.getFoldersByName<br>
+const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/index.js').getContentText());<br>
+const db = new GASDasDatabase("VK-TEST");<br>
 <br>
 <b>Example:</b>
 <picture>
