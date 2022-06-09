@@ -66,11 +66,11 @@ class GASDasDatabase{
     arrObjects.forEach(function(object,key){
       let query = "";
       for (const [key, value] of Object.entries(object)) {
-        let filter = "fullText contains '"+key+":"+value+"'";
+        let filter = `fullText contains '"${key}":${value}'`;
         query+= query ? " and "+filter : filter;
       }
       if(arrObjects.length > 1){
-        globalquery+= key+1 != arrObjects.length ? '('+query+') or' : '('+query+')';
+        globalquery+= key+1 != arrObjects.length ? `(${query}) or ` : `(${query})`;
       }else{
         globalquery = query;
       }
