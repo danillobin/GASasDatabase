@@ -1,3 +1,4 @@
+(function () {
 class GASDasDatabase{    
   constructor(name){
     this.folder = DriveApp.getFoldersByName(name);
@@ -79,3 +80,4 @@ class GASDasDatabase{
     return posts;
   }
 }
+ }());
