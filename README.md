@@ -5,5 +5,5 @@ const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com
 const db = new GASDasDatabase("YOUR DATABASE NAME",DriveApp);
 example:
 <picture>
-  <source srcset="https://i.ibb.co/LSqJ2Y5/image.jpg">
+  <source media="(prefers-color-scheme: light)" srcset="https://i.ibb.co/LSqJ2Y5/image.jpg">
 </picture>
