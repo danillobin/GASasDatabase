@@ -1,4 +1,4 @@
-export default class GASDasDatabase{    
+(class GASDasDatabase{    
   constructor(name){
     this.folder = DriveApp.getFoldersByName(name);
     if(this.folder.hasNext()){
@@ -78,4 +78,4 @@ export default class GASDasDatabase{
     let posts = this.searchPosts(globalquery);
     return posts;
   }
-}
+})
