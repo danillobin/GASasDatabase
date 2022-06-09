@@ -48,8 +48,8 @@
     let i = 0;
     while (posts.hasNext()) {
       i++;
-      if(i < offset){continue;}
       let post = posts.next();
+      if(i < offset){continue;}
       let obj = this.dataToObject(post,post.getName(),this.getValue(post));
       let dateCreatedNew = new Date(post.getDateCreated()).valueOf();
       let dateCreatedPrev = new Date(searched_posts[0]?.getDateCreated?.()).valueOf();
