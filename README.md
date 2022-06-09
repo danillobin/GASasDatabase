@@ -1,8 +1,7 @@
 # GASasDatabase
 <h3>import</h3>
 <hr>
-const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/min.js').getContentText());
-const db = new GASDasDatabase(<b>"YOUR DATABASE NAME"</b>,DriveApp);
+const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/min.js').getContentText());<br>const db = new GASDasDatabase(<b>"YOUR DATABASE NAME"</b>,DriveApp);
 <br>
 <b>Example:</b>
 <picture>
