@@ -4,7 +4,7 @@ Without comment <em>//DriveApp.getFoldersByName</em> doenst work... Idk why, but
 <hr>
 //DriveApp.getFoldersByName<br>
 const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/index.js').getContentText());<br>
-const db = new GASDasDatabase("VK-TEST");<br>
+const db = new GASDasDatabase("<b>YOUR DATABASE NAME</b>");<br>
 <br>
 <b>Example:</b>
 <picture>
