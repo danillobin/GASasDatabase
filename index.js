@@ -24,17 +24,18 @@ class GASDasDatabase{
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
   }
-  dataToObject(post,id){
+  dataToObject(post,id,value){
     let postObj = {};
     postObj.id = id;
     postObj.post = post;
+    postObj.value = value;
     return postObj;
   }
   createPost(content = "",id = "",mimetype = MimeType.PLAIN_TEXT){
     content = JSON.stringify(content);
     id = id ? id : Utilities.base64Encode(new Date().valueOf())+this.getRandomInt(100000,999999);
     let post = this.folder.createFile(id,content,mimetype);
-    let postObj = this.dataToObject(post,id);
+    let postObj = this.dataToObject(post,id,this.getValue(post));
     return postObj;
   }
   deletePost(post){
@@ -45,7 +46,7 @@ class GASDasDatabase{
     let searched_posts = [];
     while (posts.hasNext()) {
       let post = posts.next();
-      searched_posts.push(this.dataToObject(post,post.getName()))
+      searched_posts.push(this.dataToObject(post,post.getName(),this.getValue(post)))
     }
     return searched_posts;
   }
