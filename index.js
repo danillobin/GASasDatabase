@@ -41,10 +41,13 @@
   deletePost(post){
     return post.setTrashed(true);
   }
-  searchPosts(filters){
+  searchPosts(filters,limit = 20,offset = 0){
     let posts = this.folder.searchFiles(filters);
     let searched_posts = [];
+    let i = 0;
     while (posts.hasNext()) {
+      i++;
+      if(i < offset){continue;}
       let post = posts.next();
       let obj = this.dataToObject(post,post.getName(),this.getValue(post));
       let dateCreatedNew = new Date(post.getDateCreated()).valueOf();
@@ -53,6 +56,9 @@
         searched_posts.unshift(obj);
       }else{
         searched_posts.splice(1, 0, obj);
+      }
+      if(searched_posts.length >= limit && limit != 0){
+        break;
       }
     }
     return searched_posts;
@@ -68,7 +74,7 @@
     content = JSON.stringify(content);
     return post.setContent(content);
   }
-  getPosts(arrObjects = []){
+  getPosts(arrObjects = [],limit = 20,offset = 0){
     let globalquery = "";
     arrObjects.forEach(function(object,key){
       let query = "";
@@ -82,7 +88,7 @@
         globalquery = query;
       }
     })
-    let posts = this.searchPosts(globalquery);
+    let posts = this.searchPosts(globalquery,limit,offset);
     return posts;
   }
 })
