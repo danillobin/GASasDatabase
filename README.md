@@ -1,6 +1,6 @@
 # GASasDatabase
 <h3>import</h3>
-Without comment <em>//DriveApp.getFoldersByName</em> doesnt work... Idk why, but it saves,
+Without comment <em>//DriveApp.getFoldersByName</em> doesnt work... Idk why, but it saves.
 <hr>
 //DriveApp.getFoldersByName<br>
 const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/index.js').getContentText());<br>
