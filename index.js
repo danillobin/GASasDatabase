@@ -43,7 +43,12 @@
   }
   searchPosts(filters = "",limit = 20,offset = 0){
     if(isNaN(limit) || isNaN(offset)){return [];}
-    //let posts = this.folder.searchFiles(filters);
+    let posts;
+    if(!filters){
+      posts = this.folder.getFiles();
+    }else{
+      posts = this.folder.searchFiles(filters);
+    }
     let posts = this.folder.getFiles();
     let searched_posts = [];
     let i = 0;
