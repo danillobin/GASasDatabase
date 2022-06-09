@@ -81,4 +81,4 @@ class GASDasDatabase{
     return posts;
   }
 }
-let GASD = new GASDasDatabase();
+const GASD = new GASDasDatabase();
