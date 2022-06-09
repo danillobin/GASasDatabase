@@ -1,5 +1,7 @@
 class GASDasDatabase{    
-  constructor(name){
+  constructor(){
+  }
+  init(name){
     this.folder = DriveApp.getFoldersByName(name);
     if(this.folder.hasNext()){
       this.folder = this.folder.next();
@@ -79,3 +81,4 @@ class GASDasDatabase{
     return posts;
   }
 }
+let GASDasDatabase = new GASDasDatabase();
