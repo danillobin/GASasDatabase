@@ -49,7 +49,6 @@
     }else{
       posts = this.folder.searchFiles(filters);
     }
-    let posts = this.folder.getFiles();
     let searched_posts = [];
     let i = 0;
     while (posts.hasNext()) {
