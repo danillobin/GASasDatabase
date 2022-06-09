@@ -48,11 +48,11 @@
       let post = posts.next();
       let obj = this.dataToObject(post,post.getName(),this.getValue(post));
       let dateCreatedNew = new Date(post.getDateCreated()).valueOf();
-      let dateCreatedPrev = new Date(postsSort[0]?.getDateCreated?.()).valueOf();
+      let dateCreatedPrev = new Date(searched_posts[0]?.getDateCreated?.()).valueOf();
       if(dateCreatedNew > dateCreatedPrev){
-        postsSort.unshift(obj);
+        searched_posts.unshift(obj);
       }else{
-        postsSort.splice(1, 0, obj);
+        searched_posts.splice(1, 0, obj);
       }
     }
     return searched_posts;
