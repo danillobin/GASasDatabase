@@ -1,10 +1,10 @@
 (class GASDasDatabase{    
-  constructor(name){
-    this.folder = DriveApp.getFoldersByName(name);
+  constructor(name,driveapp){
+    this.folder = driveapp.getFoldersByName(name);
     if(this.folder.hasNext()){
       this.folder = this.folder.next();
     }else{
-      this.folder = DriveApp.createFolder(name);
+      this.folder = driveapp.createFolder(name);
     }
   }
   clearBase(){
