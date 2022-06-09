@@ -31,7 +31,7 @@ class GASDasDatabase{
     postObj.value = value;
     return postObj;
   }
-  createPost(content = "",id = "",mimetype = MimeType.PLAIN_TEXT){
+  createPost(content = '',id = '',mimetype = MimeType.PLAIN_TEXT){
     content = JSON.stringify(content);
     id = id ? id : Utilities.base64Encode(new Date().valueOf())+this.getRandomInt(100000,999999);
     let post = this.folder.createFile(id,content,mimetype);
@@ -62,12 +62,12 @@ class GASDasDatabase{
     return post.setContent(content);
   }
   getPosts(arrObjects = []){
-    let globalquery = "";
+    let globalquery = '';
     arrObjects.forEach(function(object,key){
-      let query = "";
+      let query = '';
       for (const [key, value] of Object.entries(object)) {
-        let filter = `fullText contains '"${key}":${value}'`;
-        query+= query ? " and "+filter : filter;
+        let filter = `fullText contains '${key}:${value}'`;
+        query+= query ? ' and '+filter : filter;
       }
       if(arrObjects.length > 1){
         globalquery+= key+1 != arrObjects.length ? `(${query}) or ` : `(${query})`;
