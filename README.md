@@ -1,6 +1,6 @@
 # GappsDapi
 <h3>import</h3>
-Without comment <em>//DriveApp.getFoldersByName</em> doesnt work... Idk why, but it saves.
+Without comment <em>//DriveApp.getFoldersByName</em> doesnt work...
 <hr>
 <code>
 
