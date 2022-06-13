@@ -1,4 +1,4 @@
-# GappsDapi
+# :open_file_folder: GappsDapi v1.0
 ### :clipboard: Course of action
 
 1. Open libraries panel.
