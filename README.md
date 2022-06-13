@@ -3,7 +3,7 @@
 1.
 ```
 const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/index.js').getContentText());
-const db = new GASDasDatabase("**YOUR DATABASE NAME**");
+const db = new GASDasDatabase("YOUR DATABASE NAME");
 ```
 2.
 <ul>
