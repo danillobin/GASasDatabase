@@ -1,7 +1,7 @@
 # GappsDapi
 ### import
 1.
-```javascript
+```
 const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/index.js').getContentText());
 const db = new GASDasDatabase("<b>YOUR DATABASE NAME</b>");
 ```
