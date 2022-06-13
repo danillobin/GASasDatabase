@@ -3,9 +3,11 @@
 Without comment <em>//DriveApp.getFoldersByName</em> doesnt work... Idk why, but it saves.
 <hr>
 <code>
-<p>//DriveApp.getFoldersByName</p>
-<p>const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/index.js').getContentText());</p>
-<p>const db = new GASDasDatabase("<b>YOUR DATABASE NAME</b>");</p>
+  <div>
+//DriveApp.getFoldersByName
+const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/index.js').getContentText());
+const db = new GASDasDatabase("<b>YOUR DATABASE NAME</b>");
+    </div>
 </code>
 <b>Example:</b>
 <picture>
