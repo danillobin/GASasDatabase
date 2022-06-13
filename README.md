@@ -2,7 +2,7 @@
 <h3>import</h3>
 <ul>
 <li>
-Without comment <em>//DriveApp.getFoldersByName</em> doesnt work...
+Without comment <em>//DriveApp.getFoldersByName</em> doesnt work...<br>
 <code>
 
   <br>
