@@ -1,100 +1,129 @@
-(class GASDasDatabase{    
-  constructor(name){
-    this.folder = DriveApp.getFoldersByName(name);
-    if(this.folder.hasNext()){
-      this.folder = this.folder.next();
-    }else{
-      this.folder = DriveApp.createFolder(name);
-    }
+(class GappsDapi{    
+  constructor(basename = ""){
+    this.base = this.getBase(basename) || this.createBase(basename);
   }
-  clearBase(){
-    let posts = this.folder.getFiles();
-    while (posts.hasNext()) {
-      posts.next().setTrashed(true);
-    }
-  }
-  deleteBase(){
-    this.folder.setTrashed(true);
-    for (const [key, value] of Object.entries(this)) {
-      delete this[key];
-    }
-  }
-  getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-  dataToObject(post,id,value){
-    let postObj = {};
-    postObj.id = id;
-    postObj.post = post;
-    postObj.value = value;
-    return postObj;
-  }
-  createPost(content = "",id = "",mimetype = MimeType.PLAIN_TEXT){
-    content = JSON.stringify(content);
-    id = id ? id : Utilities.base64Encode(new Date().valueOf())+this.getRandomInt(100000,999999);
-    let post = this.folder.createFile(id,content,mimetype);
-    let postObj = this.dataToObject(post,id,this.getValue(post));
-    return postObj;
-  }
-  deletePost(post){
-    return post.setTrashed(true);
-  }
-  searchPosts(filters = "",limit = 20,offset = 0){
-    if(isNaN(limit) || isNaN(offset)){return [];}
-    let posts;
-    if(!filters){
-      posts = this.folder.getFiles();
-    }else{
-      posts = this.folder.searchFiles(filters);
-    }
-    let searched_posts = [];
-    let i = 0;
-    while (posts.hasNext()) {
-      i++;
-      let post = posts.next();
-      if(i <= offset){continue;}
-      let obj = this.dataToObject(post,post.getName(),this.getValue(post));
-      let dateCreatedNew = new Date(post.getDateCreated()).valueOf();
-      let dateCreatedPrev = new Date(searched_posts[0]?.getDateCreated?.()).valueOf();
-      if(dateCreatedNew > dateCreatedPrev){
-        searched_posts.unshift(obj);
-      }else{
-        searched_posts.splice(1, 0, obj);
+  createBase(name){
+    const url = `https://www.googleapis.com/drive/v3/files/`;
+    let options = {
+      "method":"POST",
+      "contentType":"application/json",
+      "payload":JSON.stringify({
+        "mimeType": "application/vnd.google-apps.folder",
+        "name": name
+      }),
+      "headers":{
+        "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
-      if(searched_posts.length >= limit && limit != 0){
-        break;
+    };
+    const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+    return response;
+  }
+  getBase(name){
+    const url = `https://www.googleapis.com/drive/v3/files/?q=name='${name}' and trashed=false and mimeType = 'application/vnd.google-apps.folder'`;
+    const options = {
+      "method":"GET",
+      "headers":{
+        "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
+    };
+    const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText()).files[0];
+    return response;
+  }
+  deleteBase(baseId = this.base.id){
+    const url = `https://www.googleapis.com/drive/v3/files/${baseId}`;
+    const options = {
+      "method":"DELETE",
+      "headers":{
+        "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
+      }
+    };
+    const response = UrlFetchApp.fetch(url, options).getContentText();
+  }
+  findPosts(arrObjects = [],limit = 20){
+    const parseJson = function(obj){
+      let stringObj = "";
+      Object.entries(obj).forEach(([key, value]) => stringObj+=`${key}:${value}`); 
+      return stringObj;
     }
-    return searched_posts;
-  }
-  getValue(post){
-    let postValue = post.getBlob().getDataAsString();
-    if(postValue){
-      postValue = JSON.parse(postValue);
-    }
-    return postValue;
-  }
-  setValue(content,post){
-    content = JSON.stringify(content);
-    return post.setContent(content);
-  }
-  getPosts(arrObjects = [],limit = 20,offset = 0){
     let globalquery = "";
     arrObjects.forEach(function(object,key){
       let query = "";
-      for (const [key, value] of Object.entries(object)) {
-        let filter = `fullText contains '"${key}":${value}'`;
-        query+= query ? " and "+filter : filter;
-      }
+        query+= `fullText contains '%22${parseJson(object)}%22'`;
       if(arrObjects.length > 1){
         globalquery+= key+1 != arrObjects.length ? `(${query}) or ` : `(${query})`;
       }else{
         globalquery = query;
       }
     })
-    let posts = this.searchPosts(globalquery,limit,offset);
-    return posts;
+    globalquery = `and (${globalquery})`;
+    return this.getPosts(limit,globalquery);
   }
+  getPosts(limit = 20,dopArgs = ""){
+    const orderBy = !dopArgs ? "orderBy=createdTime&" : "";
+    const url = `https://www.googleapis.com/drive/v3/files/?pageSize=${limit}&${orderBy}q='${this.base.id}' in parents and trashed=false ${dopArgs}`;
+    const options = {
+      "method":"GET",
+      "headers":{
+        "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
+      }
+    };
+    const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText()).files;
+    return response;
+  }
+  getValuePosts(postsIds){
+    let values = {};
+    postsIds.forEach(function(id){
+      const url = `https://www.googleapis.com/drive/v3/files/${id}?alt=media`;
+      const options = {
+        "method":"GET",
+        "headers":{
+          "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
+        }
+      };
+      const response = UrlFetchApp.fetch(url, options).getContentText();
+      values[id] = JSON.parse(response);
+    })
+    
+    return values;
+  }
+  createPost(content = ""){
+    const getRandomInt = function(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+    const name = Utilities.base64Encode(new Date().valueOf())+getRandomInt(100000,999999);
+    const url = `https://www.googleapis.com/drive/v3/files/`;
+    const options = {
+      "contentType":"application/json",
+      "method":"POST",
+      "payload":JSON.stringify({
+        "mimeType": "text/plain",
+        "parents":[this.base.id],
+        "name": name
+      }),
+      "headers":{
+        "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
+      }
+    };
+    const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+    return !content ? response : this.editPost(response.id,content);
+  }
+  deletePost(postId){
+    this.fetch(`https://www.googleapis.com/drive/v3/files/${postId}`,"DELETE");
+  }
+  editPost(postId,content = ""){
+    const url = `https://www.googleapis.com/upload/drive/v3/files/${postId}`;
+    const options = {
+      "method":"PATCH",
+      "contentType":"text/plain",
+      "payload":JSON.stringify(content),
+      "headers":{
+        "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
+      }
+    };
+    const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+    return response;
+  }
+ 
 })
