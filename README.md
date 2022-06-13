@@ -1,7 +1,8 @@
 # GappsDapi
 <h3>import</h3>
+<ul>
+<li>
 Without comment <em>//DriveApp.getFoldersByName</em> doesnt work...
-<hr>
 <code>
 
   <br>
@@ -13,3 +14,5 @@ const db = new GASDasDatabase("<b>YOUR DATABASE NAME</b>");
   <source srcset="https://i.ibb.co/LSqJ2Y5/image.jpg">
   <img src="https://i.ibb.co/LSqJ2Y5/image.jpg">
 </picture>
+</li>
+  </ul>
