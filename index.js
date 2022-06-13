@@ -127,3 +127,7 @@ class GappsDapi{
   }
  
 }
+
+function init(name){
+  return new GappsDapi(name);
+}
