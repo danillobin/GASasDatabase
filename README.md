@@ -1,5 +1,5 @@
 # GappsDapi
-### :scroll: Course of action
+### :clipboard: Course of action
 
 1. Open libraries panel.
 
