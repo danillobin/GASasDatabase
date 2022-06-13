@@ -3,7 +3,7 @@
 <ul>
 <li>
 Without comment <em>//DriveApp.getFoldersByName</em> doesnt work...<br>
-<code>
+<code width="100%">
 
   <br>
 <br>const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/index.js').getContentText());
