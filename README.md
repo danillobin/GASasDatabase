@@ -7,6 +7,6 @@ const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com
 const db = new GASDasDatabase("YOUR DATABASE NAME");
 ```
 **Example:**
-![alt text][https://i.ibb.co/LSqJ2Y5/image.jpg]
+![alt text](https://i.ibb.co/LSqJ2Y5/image.jpg)
 ### OPTION 2
 
