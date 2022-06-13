@@ -1,4 +1,4 @@
-(class GappsDapi{    
+class GappsDapi{    
   constructor(basename = ""){
     this.base = this.getBase(basename) || this.createBase(basename);
   }
@@ -126,4 +126,4 @@
     return response;
   }
  
-})
+}
