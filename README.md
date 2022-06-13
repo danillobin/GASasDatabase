@@ -1,11 +1,11 @@
 # GappsDapi
 ### import
-1.
+OPTION 1
 ```
 const GASDasDatabase = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/index.js').getContentText());
 const db = new GASDasDatabase("YOUR DATABASE NAME");
 ```
-2.
+OPTION 2
 <ul>
 <li>
 Without comment <em>//DriveApp.getFoldersByName</em> doesnt work...<br>
