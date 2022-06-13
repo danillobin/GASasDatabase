@@ -3,7 +3,7 @@
 Without comment _//DriveApp.getFoldersByName_ doesnt work...<br>
 ```
 //DriveApp.getFoldersByName
-const GappsDapi = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GASasDatabase/main/index.js').getContentText());
+const GappsDapi = eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/danillobin/GappsDapi/main/min.js').getContentText());
 const db = new GappsDapi("YOUR DATABASE NAME");
 ```
 **Example:**
