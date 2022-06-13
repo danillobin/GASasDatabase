@@ -9,4 +9,6 @@ const db = new GappsDapi("YOUR DATABASE NAME");
 **Example:**
 ![alt text](https://i.ibb.co/LSqJ2Y5/image.jpg)
 ### OPTION 2
-
+1.
+2.
+3.
