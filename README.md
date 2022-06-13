@@ -1,6 +1,5 @@
 # GappsDapi
-### OPTION 1
-### OPTION 2
+### Course of action
 
 1. Open libraries panel. ![Open libraries panel](https://i.ibb.co/FqWjgjN/1.jpg)
 3. Insert ID **123aiMId9ApjxYdpB-Nptlo2FdL2sXzFkrSdDPIJHXbbIIYjcyf2RKQ1E** and press FIND ![Insert ID and press FIND](https://i.ibb.co/FBbX80F/2.jpg)
