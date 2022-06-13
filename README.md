@@ -7,12 +7,15 @@
 
 3. Insert ID **123aiMId9ApjxYdpB-Nptlo2FdL2sXzFkrSdDPIJHXbbIIYjcyf2RKQ1E** and press FIND 
 
-![Insert ID and press FIND](https://i.ibb.co/FBbX80F/2.jpg)
+<img src="https://i.ibb.co/FBbX80F/2.jpg" width="300">
+
 
 4. Press ADD/DONE 
 
-![Press ADD/DONE](https://i.ibb.co/30VTQLt/3.jpg)
+<img src="https://i.ibb.co/30VTQLt/3.jpg" width="300">
+
 
 5. Update your function as that: 
 
-![Update your function](https://i.ibb.co/2M5jWk4/4.jpg)
+<img src="https://i.ibb.co/2M5jWk4/4.jpg" width="300">
+
