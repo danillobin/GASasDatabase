@@ -3,7 +3,7 @@
 
 1. Open libraries panel.
 
-![Open libraries panel](https://i.ibb.co/FqWjgjN/1.jpg)
+<img src="https://i.ibb.co/FqWjgjN/1.jpg" width="300">
 
 3. Insert ID **123aiMId9ApjxYdpB-Nptlo2FdL2sXzFkrSdDPIJHXbbIIYjcyf2RKQ1E** and press FIND 
 
