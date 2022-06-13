@@ -17,5 +17,9 @@
 
 5. Update your function as that: 
 
+```javascript
+const db = new GDLibrary.init("DATABASE NAME");
+```
+
 <img src="https://i.ibb.co/2M5jWk4/4.jpg" width="500">
 
