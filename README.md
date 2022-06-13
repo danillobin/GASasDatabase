@@ -1,4 +1,4 @@
-# GASasDatabase
+# GappsDapi
 <h3>import</h3>
 Without comment <em>//DriveApp.getFoldersByName</em> doesnt work... Idk why, but it saves.
 <hr>
