@@ -18,8 +18,8 @@ class GappsDapi{
     let response;
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
-    }catch{
-      response = null;
+    }catch(e){
+      response = e;
     }
     return response;
   }
@@ -34,8 +34,8 @@ class GappsDapi{
     let response;
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText()).files[0];
-    }catch{
-      response = null;
+    }catch(e){
+      response = e;
     }
     return response;
   }
@@ -50,8 +50,8 @@ class GappsDapi{
     let response;
     try{
        response = UrlFetchApp.fetch(url, options).getContentText();
-    }catch{
-       response = null;
+    }catch(e){
+      response = e;
     }
   }
   findPosts(arrObjects = [],limit = 20){
@@ -86,8 +86,8 @@ class GappsDapi{
     let response;
     try{
        response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText()).files;
-    }catch{
-       response = null;
+    }catch(e){
+      response = e;
     }
     return response;
   }
@@ -102,8 +102,8 @@ class GappsDapi{
     let response;
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
-    }catch{
-      response = null;
+    }catch(e){
+      response = e;
     }
     return response;
   }
@@ -182,8 +182,8 @@ class GappsDapi{
     let response;
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
-    }catch{
-      response = null;
+    }catch(e){
+      response = e;
     }
     return response;
   }
