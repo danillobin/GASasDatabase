@@ -108,6 +108,8 @@ class GappsDapi{
     let response = null;
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+      let inBase = response?.parents?.includes(this_.base.id);
+      if(!inBase){response = null;}
     }catch(e){
       console.log(e);
     }
@@ -124,7 +126,7 @@ class GappsDapi{
           "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
         }
       };let response = null;
-        let inBase = this_.getPostById(id)?.parents?.includes(this_.base.id);
+        let inBase = this_.getPostById(id);
         if(!inBase){return;}
       try{
         response = UrlFetchApp.fetch(url, options).getContentText();
@@ -171,7 +173,7 @@ class GappsDapi{
       }
     };
     let response = null;
-    let inBase = this.getPostById(postId)?.parents?.includes(this.base.id);
+    let inBase = this.getPostById(postId);
     if(!inBase){return response;}
     try{
       response = UrlFetchApp.fetch(url, options).getResponseCode();
@@ -191,7 +193,7 @@ class GappsDapi{
       }
     };
     let response = null;
-    let inBase = this.getPostById(postId)?.parents?.includes(this.base.id);
+    let inBase = this.getPostById(postId);
     if(!inBase){return response;}
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
