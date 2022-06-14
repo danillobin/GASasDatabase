@@ -39,16 +39,16 @@ class GappsDapi{
     };
     const response = UrlFetchApp.fetch(url, options).getContentText();
   }
-  findPosts(arrObjects = [],limit = 20){
-    const parseJson = function(obj){
+  parseJson(obj){
       let stringObj = "";
       Object.entries(obj).forEach(([key, value]) => stringObj+=`${key}:${value}`); 
       return stringObj;
-    }
+  }
+  findPosts(arrObjects = [],limit = 20){
     let globalquery = "";
     arrObjects.forEach(function(object,key){
       let query = "";
-        query+= `fullText contains '%22${parseJson(object)}%22'`;
+        query+= `fullText contains '%22${this.parseJson(object)}%22'`;
       if(arrObjects.length > 1){
         globalquery+= key+1 != arrObjects.length ? `(${query}) or ` : `(${query})`;
       }else{
