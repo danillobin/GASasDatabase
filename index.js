@@ -15,7 +15,11 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+    try{
+      const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+    }catch{
+      const response = null;
+    }
     return response;
   }
   getBase(name){
@@ -26,7 +30,11 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText()).files[0];
+    try{
+      const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText()).files[0];
+    }catch{
+      const response = null;
+    }
     return response;
   }
   deleteBase(baseId = this.base.id){
@@ -37,7 +45,11 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    const response = UrlFetchApp.fetch(url, options).getContentText();
+    try{
+      const response = UrlFetchApp.fetch(url, options).getContentText();
+    }catch{
+      const response = null;
+    }
   }
   findPosts(arrObjects = [],limit = 20){
     const parseJson = function(obj){
@@ -68,7 +80,11 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText()).files;
+    try{
+      const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText()).files;
+    }catch{
+      const response = null;
+    }
     return response;
   }
   getValuePosts(postsIds){
@@ -81,8 +97,11 @@ class GappsDapi{
           "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
         }
       };
-      const response = UrlFetchApp.fetch(url, options).getContentText();
-      values[id] = JSON.parse(response);
+      try{
+        const response = UrlFetchApp.fetch(url, options).getContentText();
+        values[id] = JSON.parse(response);
+      }catch{
+      }
     })
     
     return values;
@@ -118,7 +137,11 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    const response = UrlFetchApp.fetch(url, options).getResponseCode();
+    try{
+      const response = UrlFetchApp.fetch(url, options).getResponseCode();
+    }catch{
+      const response = null;
+    }
     return response;
   }
   editPost(postId,content = ""){
@@ -131,7 +154,11 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+    try{
+      const response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+    }catch{
+      const response = null;
+    }
     return response;
   }
  
