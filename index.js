@@ -59,7 +59,7 @@ class GappsDapi{
     return this.getPosts(limit,globalquery);
   }
   getPosts(limit = 20,dopArgs = ""){
-    const orderBy = !dopArgs ? "orderBy=createdTime&" : "";
+    const orderBy = !dopArgs ? "orderBy=createdTime desc&" : "";
     const url = `https://www.googleapis.com/drive/v3/files/?pageSize=${limit}&${orderBy}q='${this.base.id}' in parents and trashed=false ${dopArgs}`;
     const options = {
       "method":"GET",
