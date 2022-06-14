@@ -76,7 +76,7 @@ class GappsDapi{
   }
   getPosts(limit = 20,dopArgs = ""){
     const orderBy = !dopArgs ? "orderBy=createdTime desc&" : "";
-    const url = `https://www.googleapis.com/drive/v3/files/?pageSize=${limit}&${orderBy}q='${this.base.id}' in parents and trashed=false ${dopArgs}`;
+    const url = `https://www.googleapis.com/drive/v3/files/?pageSize=${limit}&${orderBy}q='${this.base.id}' in parents and trashed%3Dfalse ${dopArgs}`;
     const options = {
       "method":"GET",
       "headers":{
