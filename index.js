@@ -15,12 +15,11 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    let response;
+    let response = null;
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
     }catch(e){
       console.log(e);
-      response = null;
     }
     return response;
   }
@@ -32,12 +31,11 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    let response;
+    let response = null;
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText()).files[0];
     }catch(e){
       console.log(e);
-      response = null;
     }
     return response;
   }
@@ -49,12 +47,11 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    let response;
+    let response = null;
     try{
        response = UrlFetchApp.fetch(url, options).getContentText();
     }catch(e){
       console.log(e);
-      response = null;
     }
   }
   findPosts(arrObjects = [],limit = 20){
@@ -92,12 +89,11 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    let response;
+    let response = null;
     try{
        response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText()).files;
     }catch(e){
       console.log(e);
-      response = null;
     }
     return response;
   }
@@ -109,17 +105,17 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    let response;
+    let response = null;
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
     }catch(e){
       console.log(e);
-      response = null;
     }
     return response;
   }
   getValuePosts(postsIds){
     let values = {};
+    let this_ = this;
     postsIds.forEach(function(id){
       const url = `https://www.googleapis.com/drive/v3/files/${id}?alt=media`;
       const options = {
@@ -127,9 +123,11 @@ class GappsDapi{
         "headers":{
           "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
         }
-      };
+      };let response = null;
+        let inBase = this_.getPostById(id)?.parents?.includes(this_.base.id);
+        if(!inBase){return;}
       try{
-        const response = UrlFetchApp.fetch(url, options).getContentText();
+        response = UrlFetchApp.fetch(url, options).getContentText();
         values[id] = JSON.parse(response);
       }catch{
       }
@@ -172,12 +170,13 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    let response;
+    let response = null;
+    let inBase = this.getPostById(postId)?.parents?.includes(this.base.id);
+    if(!inBase){return response;}
     try{
       response = UrlFetchApp.fetch(url, options).getResponseCode();
     }catch(e){
       console.log(e);
-      response = null;
     }
     return response;
   }
@@ -191,12 +190,13 @@ class GappsDapi{
         "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
     };
-    let response;
+    let response = null;
+    let inBase = this.getPostById(postId)?.parents?.includes(this.base.id);
+    if(!inBase){return response;}
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
     }catch(e){
       console.log(e);
-      response = null;
     }
     return response;
   }
