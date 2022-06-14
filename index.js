@@ -39,17 +39,17 @@ class GappsDapi{
     };
     const response = UrlFetchApp.fetch(url, options).getContentText();
   }
-  parseJson(obj){
+  findPosts(arrObjects = [],limit = 20){
+    const parseJson = function(obj){
       let stringObj = "";
       Object.entries(obj).forEach(([key, value]) => stringObj+=`${key}:${value}`); 
       return stringObj;
-  }
-  findPosts(arrObjects = [],limit = 20){
+    }
     let globalquery = "";
     let this_ = this;
     arrObjects.forEach(function(object,key){
       let query = "";
-        query+= `fullText contains '%22${this_.parseJson(object)}%22'`;
+        query+= `fullText contains '%22${parseJson(object)}%22'`;
       if(arrObjects.length > 1){
         globalquery+= key+1 != arrObjects.length ? `(${query}) or ` : `(${query})`;
       }else{
@@ -111,7 +111,15 @@ class GappsDapi{
     return !content ? response : this.editPost(response.id,content);
   }
   deletePost(postId){
-    this.fetch(`https://www.googleapis.com/drive/v3/files/${postId}`,"DELETE");
+    const url = `https://www.googleapis.com/drive/v3/files/${postId}`;
+    const options = {
+      "method":"DELETE",
+      "headers":{
+        "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
+      }
+    };
+    const response = UrlFetchApp.fetch(url, options).getResponseCode();
+    return response;
   }
   editPost(postId,content = ""){
     const url = `https://www.googleapis.com/upload/drive/v3/files/${postId}`;
