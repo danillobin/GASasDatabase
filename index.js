@@ -74,11 +74,17 @@ class GappsDapi{
         globalquery = query;
       }
     })
-    globalquery = `and (${globalquery})`;
+    globalquery = {"values":`and (${globalquery})`};
     return this.getPosts(limit,globalquery);
   }
   getPosts(limit = 20,dopArgs = ""){
-    const orderBy = !dopArgs ? "orderBy=createdTime desc&" : "";
+    let orderBy = "";
+    if(typeof(dopArgs) == "string"){
+      orderBy = "orderBy=createdTime desc&";
+    }else{
+      dopArgs = dopArgs.values;
+    }
+    
     const url = `https://www.googleapis.com/drive/v3/files/?pageSize=${limit}&${orderBy}q='${this.base.id}' in parents and trashed%3Dfalse ${dopArgs}`;
     const options = {
       "method":"GET",
