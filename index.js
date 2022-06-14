@@ -108,7 +108,7 @@ class GappsDapi{
     let response = null;
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
-      let inBase = response?.parents?.includes(this_.base.id);
+      let inBase = response?.parents?.includes(this.base.id);
       if(!inBase){response = null;}
     }catch(e){
       console.log(e);
