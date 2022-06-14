@@ -91,6 +91,22 @@ class GappsDapi{
     }
     return response;
   }
+  getPostById(postId){
+    const url = `https://www.googleapis.com/drive/v3/files/${postId}?fields=*`;
+    const options = {
+      "method":"GET",
+      "headers":{
+        "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
+      }
+    };
+    let response;
+    try{
+      response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
+    }catch{
+      response = null;
+    }
+    return response;
+  }
   getValuePosts(postsIds){
     let values = {};
     postsIds.forEach(function(id){
