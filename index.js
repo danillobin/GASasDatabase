@@ -46,9 +46,10 @@ class GappsDapi{
   }
   findPosts(arrObjects = [],limit = 20){
     let globalquery = "";
+    let this_ = this;
     arrObjects.forEach(function(object,key){
       let query = "";
-        query+= `fullText contains '%22${this.parseJson(object)}%22'`;
+        query+= `fullText contains '%22${this_.parseJson(object)}%22'`;
       if(arrObjects.length > 1){
         globalquery+= key+1 != arrObjects.length ? `(${query}) or ` : `(${query})`;
       }else{
