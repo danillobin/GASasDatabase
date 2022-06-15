@@ -39,8 +39,8 @@ class GappsDapi{
     }
     return response;
   }
-  deleteBase(baseId = this.base.id){
-    const url = `https://www.googleapis.com/drive/v3/files/${baseId}`;
+  deleteBase(){
+    const url = `https://www.googleapis.com/drive/v3/files/${this.base.id}`;
     const options = {
       "method":"DELETE",
       "headers":{
