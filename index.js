@@ -108,42 +108,31 @@ class GappsDapi{
     let response = null;
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
-      let inBase = response?.parents?.includes(this.base.id);
-      if(!inBase){response = null;}
+      if(!response?.parents?.includes(this.base.id)){return null;}
     }catch(e){
       console.log(e);
     }
     return response;
   }
-  getValuePosts(postsIds){
-    let values = {};
-    let this_ = this;
-    postsIds.forEach(function(id){
-      const url = `https://www.googleapis.com/drive/v3/files/${id}?alt=media`;
-      const options = {
-        "method":"GET",
-        "headers":{
-          "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
-        }
-      };let response = null;
-        let inBase = this_.getPostById(id);
-        if(!inBase){return;}
-      try{
-        response = UrlFetchApp.fetch(url, options).getContentText();
-        values[id] = JSON.parse(response);
-      }catch{
+  getValuePost(id){
+    const url = `https://www.googleapis.com/drive/v3/files/${id}?alt=media`;
+    const options = {
+      "method":"GET",
+      "headers":{
+        "Authorization":`Bearer ${ScriptApp.getOAuthToken()}`
       }
-    })
+    };
+    let response = null;
+    if(!this.getPostById(postId)){return response;}
+    try{
+      response = UrlFetchApp.fetch(url, options).getContentText();
+    }catch{
+    }
     
-    return values;
+    return response;
   }
   createPost(content = ""){
-    const getRandomInt = function(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min)) + min;
-    }
-    const name = Utilities.base64Encode(new Date().valueOf())+getRandomInt(100000,999999);
+    const name = Utilities.base64Encode(new Date().valueOf())+Math.floor(Math.random() * 999999);
     const url = `https://www.googleapis.com/drive/v3/files/`;
     const options = {
       "contentType":"application/json",
@@ -173,8 +162,7 @@ class GappsDapi{
       }
     };
     let response = null;
-    let inBase = this.getPostById(postId);
-    if(!inBase){return response;}
+    if(!this.getPostById(postId)){return response;}
     try{
       response = UrlFetchApp.fetch(url, options).getResponseCode();
     }catch(e){
@@ -193,8 +181,7 @@ class GappsDapi{
       }
     };
     let response = null;
-    let inBase = this.getPostById(postId);
-    if(!inBase){return response;}
+    if(!this.getPostById(postId)){return response;}
     try{
       response = JSON.parse(UrlFetchApp.fetch(url, options).getContentText());
     }catch(e){
